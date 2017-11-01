@@ -10,7 +10,7 @@
       </el-select>
     </el-form-item>
     <el-form-item :label="language.setting.theme">
-      <el-select v-model="conf.theme">
+      <el-select v-model="conf.theme" clearable>
         <el-option v-for="item in language.setting.themelist" :key="item.value" :value="item.value" :label="item.label">
         </el-option>
 

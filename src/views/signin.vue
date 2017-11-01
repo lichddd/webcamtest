@@ -73,6 +73,7 @@
 <script>
 import cam from '../util/cam'
 import socket from '../util/socket'
+import conf from '../config/conf'
 export default {
   name: 'hello',
 
@@ -89,7 +90,7 @@ export default {
 
     });
     this.socket=socket.createSocket(
-      "ws:" + window.location.hostname + ":9000",
+      conf.ws_url,
       this.onmessage,
       ()=>{
         this.sentTimes = [];
@@ -172,8 +173,8 @@ export default {
             !this.videoready || this.numNulls != this.defaultNumNulls) {
             return;
         }
-        if (this.islearning) {
-        // if (this.tok > 0) {
+        // if (this.islearning) {
+        if (this.islearning&&this.tok > 0) {
           var canvas = document.createElement('canvas');
           canvas.width = this.videodom.width;
           canvas.height = this.videodom.height;

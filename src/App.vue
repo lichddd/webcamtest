@@ -1,6 +1,6 @@
 <template>
   <div id="app" @click="stylenum++">
-  <!-- <link rel="stylesheet" :href="`static/index${stylenum}.css`" /> -->
+  <link rel="stylesheet" :href="`static/theme${conf.theme}.css`" />
   <div class="left-continer">
 
     <menupart></menupart>

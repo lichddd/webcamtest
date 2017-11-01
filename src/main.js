@@ -102,9 +102,11 @@ let userlist=[{
   expend:true,
   new: true
 }];
+let conf={theme:cookie.getCookie('theme')};
+
 Vue.mixin({
   data(){
-    return {'userlist':userlist,'progress':progress,'eventer':eventer,'language':language};
+    return {'userlist':userlist,'progress':progress,'eventer':eventer,'language':language,'conf':conf};
   }
 });
 Vue.config.productionTip = false;

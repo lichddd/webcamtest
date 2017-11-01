@@ -1,10 +1,10 @@
 <template>
 <div class="login">
   <div class="leftpart">
-    <video :src="videoUrl" width="320" height="240"></video>
+    <video :src="videoUrl" width="400" height="300"></video>
   </div>
   <div class="rightpart">
-    <img :src="imgUrl" width="320" height="240"></img>
+    <img :src="imgUrl" width="400" height="300"></img>
   </div>
   <div class="bottompart">
     {{language.login.lasttime}}:{{lastDate?lastDate.Format('YYYY-MM-DD hh:mm:ss'):language.login.no_lasttime}}</br>
@@ -18,6 +18,7 @@
 <script>
 import cam from '../util/cam'
 import socket from '../util/socket'
+import conf from '../config/conf'
 export default {
   name: 'login',
 
@@ -34,7 +35,7 @@ export default {
 
         });
         this.socket=socket.createSocket(
-          "ws:" + window.location.hostname + ":9000",
+          conf.ws_url,
           this.onmessage,
           ()=>{
             this.sentTimes = [];
@@ -110,36 +111,36 @@ export default {
       }
 
     },
-    // sendFrameLoop() {
-    //     if (this.socket == null || this.socket.readyState != this.socket.OPEN ||
-    //         !this.videoready || this.numNulls != this.defaultNumNulls) {
-    //         return;
-    //     }
-    //
-    //     if (this.tok > 0) {
-    //       var canvas = document.createElement('canvas');
-    //       canvas.width = this.videodom.width;
-    //       canvas.height = this.videodom.height;
-    //       var cc = canvas.getContext('2d');
-    //       cc.drawImage(this.videodom, 0, 0, this.videodom.width, this.videodom.height);
-    //       var apx = cc.getImageData(0, 0, this.videodom.width, this.videodom.height);
-    //
-    //       var dataURL = canvas.toDataURL('image/jpeg', 0.6);
-    //
-    //
-    //         var msg = {
-    //             'type': 'FRAME',
-    //             'dataURL': dataURL,
-    //             'identity': this.selectuser
-    //         };
-    //         if (this.socket) {
-    //           socket.send(JSON.stringify(msg));
-    //           this.tok--;
-    //         }
-    //
-    //     }
-    //     setTimeout(()=>{this.sendFrameLoop()}, 500);
-    // },
+    sendFrameLoop() {
+        if (this.socket == null || this.socket.readyState != this.socket.OPEN ||
+            !this.videoready || this.numNulls != this.defaultNumNulls) {
+            return;
+        }
+
+        if (this.tok > 0) {
+          var canvas = document.createElement('canvas');
+          canvas.width = this.videodom.width;
+          canvas.height = this.videodom.height;
+          var cc = canvas.getContext('2d');
+          cc.drawImage(this.videodom, 0, 0, this.videodom.width, this.videodom.height);
+          var apx = cc.getImageData(0, 0, this.videodom.width, this.videodom.height);
+
+          var dataURL = canvas.toDataURL('image/jpeg', 0.6);
+
+
+            var msg = {
+                'type': 'FRAME',
+                'dataURL': dataURL,
+                'identity': this.selectuser
+            };
+            if (this.socket) {
+              this.socket.send(JSON.stringify(msg));
+              this.tok--;
+            }
+
+        }
+        setTimeout(()=>{this.sendFrameLoop()}, 500);
+    },
 
     sendState() {
         let arr=[];
@@ -164,7 +165,6 @@ export default {
     ,
 
     onmessage(e) {
-        console.log(e);
         let j = JSON.parse(e.data)
         if (j.type == "NULL") {
           this.receivedTimes.push(new Date());
@@ -172,7 +172,7 @@ export default {
           if (this.numNulls == this.defaultNumNulls) {
             // updateRTT();
             this.sendState();
-            // sendFrameLoop();
+            this.sendFrameLoop();
           } else {
             this.socket.send(JSON.stringify({
               'type': 'NULL'
@@ -180,7 +180,7 @@ export default {
             this.sentTimes.push(new Date());
           }
         } else if (j.type == "PROCESSED") {
-          // this.tok++;
+          this.tok++;
         } else if (j.type == "NEW_IMAGE") {
           // this.userlist[j.identity].imgs.push({
           //   hash: j.hash,
@@ -257,7 +257,7 @@ export default {
   height: 100%
 }
 .leftpart {
-  width: 330px;
+  width: 410px;
   display: inline-block;
   vertical-align: top;
 
@@ -270,7 +270,7 @@ export default {
 }
 
 .rightpart {
-  width: 330px;
+  width: 410px;
   display: inline-block;
   vertical-align: top;
 

@@ -1,7 +1,7 @@
 <template>
 <div class="login">
   <el-form class="form" label-width="100px">
-    <el-form-item :label="language.setting.language" prop="user">
+    <el-form-item :label="language.setting.language">
       <el-select v-model="selectLanguage">
         <el-option v-for="item in language.setting.languagelist" :key="item.value" :value="item.value" :label="item.label">
         </el-option>
@@ -9,7 +9,14 @@
 
       </el-select>
     </el-form-item>
+    <el-form-item :label="language.setting.theme">
+      <el-select v-model="conf.theme">
+        <el-option v-for="item in language.setting.themelist" :key="item.value" :value="item.value" :label="item.label">
+        </el-option>
 
+
+      </el-select>
+    </el-form-item>
   </el-form>
 
 </div>
@@ -40,6 +47,10 @@ export default {
       window.location.reload();
 
 
+    }
+    ,
+    "conf.theme"() {
+      cookie.setCookie('theme', this.conf.theme);
     }
   }
 }

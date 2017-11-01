@@ -15,10 +15,7 @@ export default {
     return new Promise((resolve,reject)=>{
 
       if (navigator.getUserMedia) {
-        let videoSelector = {
-          video: true
-        };
-        navigator.getUserMedia(videoSelector, (stream) => {
+        navigator.getUserMedia({video: true}, (stream) => {
           if (el.mozCaptureStream) {
             el.mozSrcObject = stream;
           } else {
@@ -30,8 +27,7 @@ export default {
             success();
           }
           resolve(() => {
-            let arr = stream.getTracks();
-            arr.forEach(l => {
+            stream.getTracks().forEach(l => {
               l.stop();
             });
             window.URL.revokeObjectURL(stream);

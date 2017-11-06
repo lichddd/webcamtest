@@ -5,6 +5,7 @@ import syslogin from './syslogin'
 import home from './home'
 import error from './error'
 import login from './login'
+import signin from './signin'
 export default {
   menu,
   setting,
@@ -13,4 +14,5 @@ export default {
   home,
   error,
   login,
+  signin,
 };

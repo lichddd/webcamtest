@@ -3,29 +3,42 @@
   <div class="leftpart">
     <video :src="videoUrl" width="400" height="300"></video>
 
-    <el-input style="margin-bottom:10px;" placeholder="请输入新用户名" @keydown.native.enter="addPerson()" icon="plus" v-model="new_person_name" :on-icon-click="addPerson">
+
+    <el-checkbox style="width:120px;text-align:right;padding-right:12px;">{{language.signin.force_new_user}}</el-checkbox>
+    <el-input style="margin-bottom:10px;width:calc(100% - 124px);margin-left:-4px;" :placeholder="language.signin.please_input_new_name" @keydown.native.enter="addPerson()" icon="plus" v-model="new_person_name" :on-icon-click="addPerson">
     </el-input>
-    对
-    <el-select v-model="selectuser" filterable placeholder="请选择">
-      <el-option v-for="(item,index) in userlist" :key="index" :label="item.name" :value="index">
-      </el-option>
-    </el-select>
-    进行学习
-    <el-switch v-model="islearning"  v-vue-tooltip="islearning?'关闭':'开启'" @change="changeLearning" on-text="" off-text="">
-    </el-switch>
-    <el-button @click="showTSNE()">图表</el-button>
-    <el-button @click="cut()">测试</el-button>
+
+    <br/>
+
+    <el-form  label-width="120px" style="margin-top:10px;">
+      <el-form-item :label="language.signin.now_select_user">
+        <el-select v-model="selectuser" filterable :placeholder="language.signin.please_select">
+          <el-option v-for="(item,index) in userlist" :key="index" :label="item.name" :value="index">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="language.signin.learning">
+        <el-switch v-model="islearning"  v-vue-tooltip="islearning?language.signin.close:language.signin.open" @change="changeLearning" on-text="" off-text="">
+        </el-switch>
+      </el-form-item>
+      <el-form-item label="">
+        <el-button @click="showTSNE()">{{language.signin.chart}}</el-button>
+        <el-button @click="cut()">测试</el-button>
+      </el-form-item>
+    </el-form>
+
+
 
   </div>
   <div class="imglist">
     <div v-if="u.new" class="imglist-user" v-for="(u,index) in userlist">
-      <h6>{{u.name}}  ({{u.imgs.length}}个)<i v-vue-tooltip="u.expend?'收起':'展开'" @click="u.expend=!u.expend" class="expendicon el-icon-arrow-down" :class="{'el-icon-arrow-up':u.expend}"></i></h6>
+      <h6>{{u.name}}  ({{u.imgs.length}})<i v-vue-tooltip="u.expend?language.signin.collapse:language.signin.expend" @click="u.expend=!u.expend" class="expendicon el-icon-arrow-down" :class="{'el-icon-arrow-up':u.expend}"></i></h6>
       <div class="imgs"  v-show="u.expend">
         <div v-for="(m,idx) in u.imgs" class="img">
           <img :src="m.image" />
-          <el-popover width="250" class="setting" v-vue-tooltip="'调换'">
+          <el-popover width="250" class="setting" v-vue-tooltip="language.signin.changepic">
             <div>
-              <el-select v-model="editPersonStr" placeholder="请选择要调换到的人">
+              <el-select v-model="editPersonStr" :placeholder="language.signin.please_select_user">
                 <el-option v-if="iii!=index" v-for="(item,iii) in userlist" :key="iii" :label="item.name" :value="iii">
                 </el-option>
               </el-select>
@@ -35,18 +48,18 @@
               <el-button type="text" icon="setting" style="padding:0px;" size="large" @click="currentImgInx=idx,currentUserInx=index,editPersonStr=''"></el-button>
             </span>
           </el-popover>
-          <el-button v-vue-tooltip="'删除'" type="text" icon="delete" class="delete" size="large" @click="removeImage(u.imgs,idx)"></el-button>
+          <el-button v-vue-tooltip="language.signin.delete" type="text" icon="delete" class="delete" size="large" @click="removeImage(u.imgs,idx)"></el-button>
         </div>
       </div>
     </div>
     <div v-if="!u.new" class="imglist-user" v-for="(u,index) in userlist">
-      <h6>{{u.name}}  ({{u.imgs.length}}个)<i v-vue-tooltip="u.expend?'收起':'展开'" @click="u.expend=!u.expend" class="expendicon el-icon-arrow-down" :class="{'el-icon-arrow-up':u.expend}"></i></h6>
+      <h6>{{u.name}}  ({{u.imgs.length}})<i v-vue-tooltip="u.expend?language.signin.collapse:language.signin.expend" @click="u.expend=!u.expend" class="expendicon el-icon-arrow-down" :class="{'el-icon-arrow-up':u.expend}"></i></h6>
       <div class="imgs"  v-show="u.expend">
         <div v-for="(m,idx) in u.imgs" class="img">
           <img :src="m.image" />
-          <el-popover width="250" class="setting"  v-vue-tooltip="'调换'">
+          <el-popover width="250" class="setting"  v-vue-tooltip="language.signin.changepic">
             <div>
-              <el-select v-model="editPersonStr" filterable placeholder="请选择要调换到的人">
+              <el-select v-model="editPersonStr" filterable :placeholder="language.signin.please_select_user">
                 <el-option v-if="iii!=index" v-for="(item,iii) in userlist" :key="iii" :label="item.name" :value="iii">
                 </el-option>
               </el-select>
@@ -56,7 +69,7 @@
               <el-button type="text" icon="setting" style="padding:0px;" size="large" @click="currentImgInx=idx,currentUserInx=index,editPersonStr=''"></el-button>
             </span>
           </el-popover>
-          <el-button  v-vue-tooltip="'删除'" type="text" icon="delete" class="delete" size="large" @click="removeImage(u.imgs,idx)"></el-button>
+          <el-button  v-vue-tooltip="language.signin.delete" type="text" icon="delete" class="delete" size="large" @click="removeImage(u.imgs,idx)"></el-button>
         </div>
       </div>
     </div>
@@ -122,13 +135,7 @@ export default {
       tok: 0,
       defaultNumNulls: 20,
 
-      //已全局注入了
-      // userlist: [{
-      //   name: "默认用户",
-      //   imgs: [],
-      //   expend:true,
-      //   new: true
-      // }],
+
       selectuser: 0,
       new_person_name: "",
       islearning:false,
@@ -207,7 +214,7 @@ export default {
 
           this.$message({
             showClose: true,
-            message: "已有该用户",
+            message: this.language.signin.user_exist,
             type: "error"
           });
           return;
@@ -406,7 +413,7 @@ export default {
         } else {
           this.$message({
             showClose: true,
-            message: "未知消息类型" + j.type,
+            message: this.language.error.socket_error.unknown_message_type + j.type,
             type: "error"
           });
         }
@@ -436,6 +443,7 @@ export default {
   height: 100%
 }
 .leftpart {
+  text-align: left;
   width: 410px;
   display: inline-block;
   vertical-align: top;

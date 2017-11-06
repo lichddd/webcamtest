@@ -12,7 +12,7 @@ export default{
         success:"连接服务器成功",
         close:"服务器连接关闭",
         error:"连接服务器失败",
-
+        unknown_message_type:"收到类型未知消息",
       },
       cam_error:{
         success:"打开摄像头成功",

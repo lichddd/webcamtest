@@ -1,6 +1,6 @@
 import cookie from '../../util/cookie'
 import Vue from 'vue'
-
+import locale from 'element-ui/lib/locale'
 function resetLanguage(lang)
 {
   if (lang.match(/^zh-/)) {
@@ -23,7 +23,10 @@ if (cookie.getCookie("language")&&cookie.getCookie("language").length>0) {
   cookie.setCookie("language",lang);
 }
 language = require("./"+lang+"/index.js");
+let local =require(`./element-ui/${lang}`).default;
+locale.use(locale);
 export default{
+  local:local,
   getLanguage(code,params){
     let tempstr=code;
     if (params&&params.length>0) {

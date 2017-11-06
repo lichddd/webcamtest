@@ -230,7 +230,7 @@ export default {
         } else {
           this.$message({
             showClose: true,
-            message: "未知消息类型" + j.type,
+            message: this.language.error.socket_error.unknown_message_type + j.type,
             type: "error"
           });
         }

@@ -12,7 +12,7 @@ export default{
         success:"サーバのリンクが成功した",
         close:"サーバのリンクがクローズした",
         error:"サーバのリンクがエラ",
-
+        unknown_message_type:"タイプの未知のメッセージが受信された",
       },
       cam_error:{
         success:"カメラの始動が成功した",

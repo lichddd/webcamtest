@@ -4,7 +4,7 @@
 v-on:mousemove="drag($event)">
   <h1>{{language.home.welcome}}</h1>
   <h6>{{language.home.welcome2}}</h6>
-  <div v-html="clipstyle"></div>
+  <!-- <div v-html="clipstyle"></div> -->
   <div id="canvas" class="canvas">
 
     <div class="object3d" v-bind:style="{transform:'translate3d('+(ball.x-ball.clipwidthheight/2)+'px,'+(ball.y-ball.clipwidthheight/2)+'px,'+ball.z+'px) rotateX('+ball.rx+'deg) rotateY('+ball.ry+'deg) rotateZ('+ball.rz+'deg)'}">
@@ -15,7 +15,7 @@ v-on:mousemove="drag($event)">
       v-on:click="$playsong([Object.assign({}, b)])"
       v-on:mouseover="b.hanasu+=10;"  v-on:mouseout="b.hanasu-=10;" class="clip" v-for="(b,$index) in ball.clips" v-if="lines[$index]" style="" v-bind:style="{
 
-
+                 'background-image': `url(${b.pic}) !important`,
                  'width':(ball.clipwidthheight-2)+'px',
                  'height':(ball.clipwidthheight-2)+'px',
                  'border-radius':((rotateYDeg($index,ball.clips.length)==90)||(rotateYDeg($index,ball.clips.length)==-90)?'100% !important':''),
@@ -43,7 +43,7 @@ import qs from "qs"
 import timermixin from '../mixin/TimerMixin'
 export default {
   name: 'rank',
-  mixins:[timermixin('runBall',50),timermixin('changeImg',1000)],
+  mixins:[timermixin('runBall',50)],
   mounted() {
 
 

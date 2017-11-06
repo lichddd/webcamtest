@@ -9,4 +9,5 @@ export default {
   user_length_warn:"length is 8-16 char",
   password_length_warn:"length is 8-16 char",
   no_login:"do not login yet or already expired,please login",
+  login_error:"user or password is wrong",
 };

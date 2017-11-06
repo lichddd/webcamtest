@@ -12,7 +12,7 @@ export default{
         success:"link to server success",
         close:"link close",
         error:"link error",
-
+        unknown_message_type:"unknown type message has been received",
       },
       cam_error:{
         success:"link to cam success",

@@ -9,4 +9,5 @@ export default {
   user_length_warn:"8-16キャラクター",
   password_length_warn:"8-16字符キャラクター",
   no_login:"ログインしなかたとか、ログイン期限切りとか,ログイン直しください",
+  login_error:"アカウントとかパスワードとか違います",
 };

@@ -68,7 +68,7 @@ export default {
           // });
           //
 
-          if (this.form.user=="hikdataadmin"&&crypto.createHash('md5').update(this.form.password).digest('hex')=="3e5666deef0afadf1683f08258e17636") {
+          if (this.form.user=="hikdataadmin"&&crypto.createHash('md5').update(this.form.password).digest('hex')==crypto.createHash('md5').update("123456789").digest('hex')) {
             cookie.setCookieOnlySession("token","1234");
             this.$router.replace({path:(this.$route.query.redirect||"/")});
           } else {

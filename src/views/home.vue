@@ -9,28 +9,28 @@ v-on:mousemove="drag($event)">
 
     <div class="object3d" v-bind:style="{transform:'translate3d('+(ball.x-ball.clipwidthheight/2)+'px,'+(ball.y-ball.clipwidthheight/2)+'px,'+ball.z+'px) rotateX('+ball.rx+'deg) rotateY('+ball.ry+'deg) rotateZ('+ball.rz+'deg)'}">
       <div
-
-
       v-vue-tooltip="b.name"
       v-on:click="$playsong([Object.assign({}, b)])"
-      v-on:mouseover="b.hanasu+=10;"  v-on:mouseout="b.hanasu-=10;" class="clip" v-for="(b,$index) in ball.clips" v-if="lines[$index]" style="" v-bind:style="{
+      v-on:mouseover="b.hanasu+=10;"
+      v-on:mouseout="b.hanasu=0;"
+      class="clip"
+      v-for="(b,$index) in ball.clips"
+      v-if="lines[$index]"
+      style=""
+      v-bind:style="{
+         'background-image': `url(${b.pic}) !important`,
+         'width':(ball.clipwidthheight-2)+'px',
+         'height':(ball.clipwidthheight-2)+'px',
+         'border-radius':((rotateYDeg($index,ball.clips.length)==90)||(rotateYDeg($index,ball.clips.length)==-90)?'100% !important':''),
+         'transform':'rotateY('+rotateXDeg($index)+'deg) '+
+            'rotateX('+rotateYDeg($index,ball.clips.length)+'deg) '+
+            (rotateYDeg($index,ball.clips.length)>0?'rotateZ(180deg)':'')+
+            ' translateZ('+(ballR+ball.hanasuR+b.hanasu*5)+'px)'+
+            ' scale('+(b.hanasu/20+1)+')',
+      }">
 
-                 'background-image': `url(${b.pic}) !important`,
-                 'width':(ball.clipwidthheight-2)+'px',
-                 'height':(ball.clipwidthheight-2)+'px',
-                 'border-radius':((rotateYDeg($index,ball.clips.length)==90)||(rotateYDeg($index,ball.clips.length)==-90)?'100% !important':''),
-                 'transform':'rotateY('+rotateXDeg($index)+'deg) '+
-                 'rotateX('+rotateYDeg($index,ball.clips.length)+'deg) '
-
-                 +(rotateYDeg($index,ball.clips.length)>0?'rotateZ(180deg)':'')
-
-
-
-                 +' translateZ('+(ballR+ball.hanasuR+b.hanasu)+'px)'
-                 +' scale('+(b.hanasu/20+1)+')'
-                 ,
-
-                }"></div>
+      <span class="clip_label" :class="{'labelshow':b.is}">{{'登入'}}</span>
+      </div>
 
     </div>
 
@@ -43,25 +43,12 @@ import qs from "qs"
 import timermixin from '../mixin/TimerMixin'
 export default {
   name: 'rank',
-  mixins:[timermixin('runBall',50)],
+  mixins:[timermixin('runBall',50),timermixin('runClips',200)],
   mounted() {
-
-
-
-
     window.addEventListener("resize",this.resize);
-
-
-
-
     this.search();
-
-
     setTimeout(()=>{
-
       this.isball=true;
-
-
     },1000);
   },
   data() {
@@ -70,7 +57,6 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       source: axios.CancelToken.source(),
       ball: {
-
         x: 0,
         y: 0,
         z: 0,
@@ -131,6 +117,7 @@ export default {
             hanasu:0,
             name:this.imglist[i%this.imglist.length].name,
             pic:this.imglist[i%this.imglist.length].image,
+            is:false,
           });
         }
         this.$nextTick(()=>{
@@ -152,10 +139,19 @@ export default {
       if ((this.preX&&this.preY)) {
         return ;
       }
-
       this.ball.ry-=0.5;
-
-
+    }
+    ,
+    runClips()
+    {
+        let randomN=Math.floor(Math.random()*this.ball.clips.length);
+        let randomL=Math.ceil(Math.random()*20);
+        this.ball.clips[randomN].hanasu=randomL;
+        this.ball.clips[randomN].is=true;
+        setTimeout(()=>{
+          this.ball.clips[randomN].hanasu=0;
+          this.ball.clips[randomN].is=false;
+        },5000);
     }
     ,
     changeImg()
@@ -317,7 +313,6 @@ h6
   height: 0px;
   transform-origin: center;
 }
-
 .clip {
   transform-origin: center;
 
@@ -335,6 +330,32 @@ h6
   transition: transform 0.5s;
   cursor: pointer;
   background-image: url(../assets/user.png);
+  display: flex;
+  align-items: center;
+}
+.clip .clip_label
+{
+  font-size: 21px;
+  font-weight: 900;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 0.5s;
+  text-align: center;
+  width: 100%;
+
+}
+.clip .clip_label.labelshow
+{
+  opacity: 1;
+  animation: clip_label 1s infinite ease-in-out;
+}
+@keyframes clip_label {
+  0% , 100%{
+    color: #22b2ef;
+  }
+  50%{
+    color: #ffffff;
+  }
 }
 .main
 {

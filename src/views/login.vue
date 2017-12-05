@@ -192,7 +192,7 @@ export default {
           // this.userlist[j.identity].new=true;
           // this.userlist[j.identity].expend=true;
         }
-        // else if (j.type == "IDENTITIES") {
+        else if (j.type == "IDENTITIES") {
         //
         //   this.lastDate=new Date();
         //   this.targets=[];
@@ -200,7 +200,7 @@ export default {
         //     this.targets.push((this.userlist[j.identities[i]]&&this.userlist[j.identities[i]].name)||this.language.login.unknown);
         //   }
         //
-        // }
+        }
         else if (j.type == "REC") {
 
           this.lastDate=new Date();

@@ -333,7 +333,8 @@ export default {
         if (this.socket != null) {
             var msg = {
                 'type': 'TRAINING',
-                'val': this.islearning
+                'val': this.islearning,
+                'name':this.userlist[this.selectuser].name,
             };
             this.socket.send(JSON.stringify(msg));
         }

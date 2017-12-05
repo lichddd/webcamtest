@@ -191,32 +191,24 @@ export default {
           //
           // this.userlist[j.identity].new=true;
           // this.userlist[j.identity].expend=true;
-        } else if (j.type == "IDENTITIES") {
-          // var h = "Last updated: " + (new Date()).toTimeString();
-          // h += "<ul>";
-          // var len = j.identities.length
-          // if (len > 0) {
-          //   for (var i = 0; i < len; i++) {
-          //     var identity = "Unknown";
-          //     var idIdx = j.identities[i];
-          //     if (idIdx != -1) {
-          //       identity = people[idIdx];
-          //     }
-          //     h += "<li>" + identity + "</li>";
-          //   }
-          // } else {
-          //   h += "<li>Nobody detected.</li>";
-          // }
-          // h += "</ul>"
-          // $("#peopleInVideo").html(h);
-          //
-          //
-          //
+        }
+        // else if (j.type == "IDENTITIES") {
+        //
+        //   this.lastDate=new Date();
+        //   this.targets=[];
+        //   for (var i = 0; i < j.identities.length; i++) {
+        //     this.targets.push((this.userlist[j.identities[i]]&&this.userlist[j.identities[i]].name)||this.language.login.unknown);
+        //   }
+        //
+        // }
+        else if (j.type == "REC") {
+
           this.lastDate=new Date();
           this.targets=[];
-          for (var i = 0; i < j.identities.length; i++) {
-            this.targets.push((this.userlist[j.identities[i]]&&this.userlist[j.identities[i]].name)||this.language.login.unknown);
-          }
+          this.targets.push(j.personname);
+          // for (var i = 0; i < j.identities.length; i++) {
+          //   this.targets.push((this.userlist[j.identities[i]]&&this.userlist[j.identities[i]].name)||this.language.login.unknown);
+          // }
 
         } else if (j.type == "ANNOTATED") {
           // $("#detectedFaces").html(

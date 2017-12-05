@@ -97,7 +97,7 @@ let eventer={
   _hasHookEvent:false
 };
 let userlist=[{
-  name: "默认用户",
+  name: "Unknown",
   imgs: [],
   expend:true,
   new: true

@@ -7,11 +7,20 @@ Date.prototype.Format = function (formatStr) {
   str = str.replace(/M/g, month);
   str = str.replace(/dd|DD/, this.getDate() > 9 ? this.getDate().toString() : '0' + this.getDate());
   str = str.replace(/d|D/g, this.getDate());
-  var hour=this.getHours().toString().padStart(2, '0')
+  var hour=this.getHours().toString();
+  if (hour.length<=1) {
+    hour='0'+hour;
+  }
   str = str.replace(/hh|HH/, hour);
-  var min=this.getMinutes().toString().padStart(2, '0')
+  var min=this.getMinutes().toString();
+  if (min.length<=1) {
+    min='0'+min;
+  }
   str = str.replace(/mm/, min);
-  var sec=this.getSeconds().toString().padStart(2, '0')
+  var sec=this.getSeconds().toString();
+  if (sec.length<=1) {
+    sec='0'+sec;
+  }
   str = str.replace(/ss|SS/, sec);
   return str;
 }

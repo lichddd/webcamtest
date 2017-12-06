@@ -8,6 +8,7 @@ import setting from '@/views/setting'
 import {Message} from 'element-ui'
 import cookie from '@/util/cookie'
 import language from '../config/language'
+import login_ipcam from '@/views/login_ipcam'
 Vue.use(Router)
 let router = new Router({
   routes: [
@@ -31,6 +32,11 @@ let router = new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/login_ipcam',
+      name: 'login_ipcam',
+      component: login_ipcam
     },
     {
       path: '/setting',

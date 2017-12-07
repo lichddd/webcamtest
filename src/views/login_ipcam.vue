@@ -117,6 +117,7 @@ export default {
 
         this.imgUrl2 = canvas.toDataURL('image/jpeg', 0.6);
 
+        canvas=null;
 
         this.lastDate=new Date();
         this.targets=[];

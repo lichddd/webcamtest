@@ -5,4 +5,5 @@ export default {
   target:"Targets",
   no_target:"None Target",
   unknown:"Unknown",
+  way:"Way",
 }

@@ -29,4 +29,5 @@ export default {
     collapse:"離れ",
 
     force_new_user:"強制追加",
+    add_user:"新規ユーザ",
 }

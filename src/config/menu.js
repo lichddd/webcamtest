@@ -29,13 +29,18 @@ export default [
     target:"login",
   },
   {
-    title:language.menu.login_ipcam,
+    title:language.menu.signin_ipcam,
     code:"4",
+    target:"signin_ipcam",
+  },
+  {
+    title:language.menu.login_ipcam,
+    code:"5",
     target:"login_ipcam",
   },
   {
     title:language.menu.setting,
-    code:"5",
+    code:"6",
     target:"setting",
   },
 

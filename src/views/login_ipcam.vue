@@ -6,14 +6,19 @@
   <div class="leftpart">
     <img :src="imgUrl1" width="400" height="300"></img>
   </div>
-  <div class="rightpart">
+  <div class="rightpart" v-if="way==2">
     <img :src="imgUrl2" width="400" height="300"></img>
   </div>
+  <br/>
   <div class="bottompart">
     {{language.login_ipcam.lasttime}}:{{lastDate?lastDate.Format('YYYY-MM-DD hh:mm:ss'):language.login_ipcam.no_lasttime}}</br>
     {{language.login_ipcam.target}}:{{this.targets.length>0?this.targets.join(','):language.login_ipcam.no_target}}</br>
   </div>
-  <el-button @click="cut()">测试</el-button>
+  <br/>
+  <el-radio-group v-model="way">
+      <el-radio-button :label="1">1{{language.login_ipcam.way}}</el-radio-button>
+      <el-radio-button :label="2">2{{language.login_ipcam.way}}</el-radio-button>
+  </el-radio-group>
   <el-switch
     v-model="istest"
     on-text="测试"
@@ -62,7 +67,7 @@ export default {
   data() {
     return {
       istest:false,
-
+      way:1,
 
 
 
@@ -156,7 +161,34 @@ export default {
       }
 
     },
+    sendFrameLoop() {
+        if (this.socket == null || this.socket.readyState != this.socket.OPEN ||
+            !this.videoready || this.numNulls != this.defaultNumNulls) {
+            return;
+        }
 
+        // if (this.tok > 0) {
+          // var canvas = document.createElement('canvas');
+          // canvas.width = this.videodom.width;
+          // canvas.height = this.videodom.height;
+          // var cc = canvas.getContext('2d');
+          // cc.drawImage(this.videodom, 0, 0, this.videodom.width, this.videodom.height);
+          // var apx = cc.getImageData(0, 0, this.videodom.width, this.videodom.height);
+          //
+          // var dataURL = canvas.toDataURL('image/jpeg', 0.6);
+
+
+            var msg = {
+                'type': 'IP_REQUEST'
+            };
+            if (this.socket) {
+              this.socket.send(JSON.stringify(msg));
+              // this.tok--;
+            }
+
+        // }
+        setTimeout(()=>{this.sendFrameLoop()}, 100);
+    },
     sendState() {
         let arr=[];
         let arr2=[];
@@ -178,7 +210,15 @@ export default {
 
     }
     ,
-
+    switchWay(){
+      var msg = {
+          'type': 'IP_SWITCH',
+          'num': this.way,
+      };
+      if (this.socket) {
+        this.socket.send(JSON.stringify(msg));
+      }
+    },
     onmessage(e) {
         let j = JSON.parse(e.data)
         if (j.type == "NULL") {
@@ -187,6 +227,8 @@ export default {
           if (this.numNulls == this.defaultNumNulls) {
             // updateRTT();
             this.sendState();
+            this.switchWay();
+            this.sendFrameLoop();
           } else {
             this.socket.send(JSON.stringify({
               'type': 'NULL'
@@ -230,6 +272,17 @@ export default {
           // )
           //
           this.imgUrl1=j['content'];
+        } else if (j.type == "IPC") {
+          // $("#detectedFaces").html(
+          //   "<img src='" + j['content'] + "' width='430px'></img>"
+          // )
+          //
+          if (j['num']==1) {
+            this.imgUrl1=j['content'];
+          }
+          if (j['num']==2) {
+            this.imgUrl2=j['content'];
+          }
         } else if (j.type == "TSNE_DATA") {
           // this.tsneData=j['content'];
           // this.isshowtsne=true;
@@ -252,6 +305,14 @@ export default {
       this.socket.closebyme=true;
       this.socket=null;
     }
+  },
+  watch:{
+    way(){
+
+      this.switchWay();
+
+    }
+
   }
 }
 </script>
@@ -290,6 +351,7 @@ export default {
 }
 .bottompart {
   margin-top: 10px;
+  margin-bottom: 10px;
   text-align: left;
   width: 665px;
   display: inline-block;

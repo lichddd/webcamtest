@@ -110,7 +110,7 @@ export default {
           })
         });
         for (var i = 1; i < 5; i++) {
-          this.imglist.push({name:this.language.home.user+(i),image:(i%5?`static/img/${i%5}.jpg`:``)});
+          this.imglist.push({name:this.language.home.user+(i),image:(i%5?`static/img/${i%5}.jpeg`:``)});
         }
         for (var i = 0; i < 210; i++) {
           this.ball.clips.push({

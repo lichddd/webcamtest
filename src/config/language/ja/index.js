@@ -7,6 +7,7 @@ import error from './error'
 import login from './login'
 import login_ipcam from './login_ipcam'
 import signin from './signin'
+import signin_ipcam from './signin_ipcam'
 export default {
   menu,
   setting,
@@ -17,4 +18,5 @@ export default {
   login,
   signin,
   login_ipcam,
+  signin_ipcam,
 };

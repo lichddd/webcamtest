@@ -29,4 +29,6 @@ export default {
     collapse:"收起",
 
     force_new_user:"强制新增",
+
+    add_user:"添加用户",
 }

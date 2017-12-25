@@ -4,13 +4,13 @@
     <video :src="videoUrl" width="400" height="300"></video>
 
 
-    <el-checkbox style="width:120px;text-align:right;padding-right:12px;">{{language.signin.force_new_user}}</el-checkbox>
-    <el-input style="margin-bottom:10px;width:calc(100% - 124px);margin-left:-4px;" :placeholder="language.signin.please_input_new_name" @keydown.native.enter="addPerson()" icon="plus" v-model="new_person_name" :on-icon-click="addPerson">
-    </el-input>
 
-    <br/>
 
-    <el-form  label-width="120px" style="margin-top:10px;">
+    <el-form  label-width="100px" style="margin-top:10px;">
+      <el-form-item :label="language.signin_ipcam.add_user">
+        <el-input style="" :placeholder="language.signin_ipcam.please_input_new_name" @keydown.native.enter="addPerson()" icon="plus" v-model="new_person_name" :on-icon-click="addPerson">
+        </el-input>
+      </el-form-item>
       <el-form-item :label="language.signin.now_select_user">
         <el-select v-model="selectuser" filterable :placeholder="language.signin.please_select">
           <el-option v-for="(item,index) in userlist" :key="index" :label="item.name" :value="index">
@@ -203,7 +203,7 @@ export default {
             }
 
         }
-        setTimeout(()=>{this.sendFrameLoop()}, 500);
+        setTimeout(()=>{this.sendFrameLoop()}, 100);
     },
     addPerson() {
       if (!this.new_person_name) {
@@ -329,7 +329,20 @@ export default {
     }
     ,
     changeLearning() {
-
+        if(!this.islearning)
+        {
+          if(this.userlist.length>3)
+          {
+            this.userlist.splice(0,this.userlist.length);
+            this.userlist.push({
+              name: "Unknown",
+              imgs: [],
+              expend:true,
+              new: true
+            });
+            this.selectuser=0;
+          }
+        }
         if (this.socket != null) {
             var msg = {
                 'type': 'TRAINING',

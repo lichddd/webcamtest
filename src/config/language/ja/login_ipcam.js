@@ -5,4 +5,5 @@ export default {
   target:"認識対象",
   no_target:"対象なし",
   unknown:"未知",
+  way:"ルート",
 }

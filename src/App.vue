@@ -51,9 +51,9 @@ export default {
 }
 
 .main-continer {
-  left: 100px;
+  left: 120px;
   height: 100%;
-  width: calc(100% - 100px);
+  width: calc(100% - 120px);
   position: absolute;
   overflow: auto;
   background-color: #ffffff;
@@ -68,7 +68,7 @@ export default {
   position: absolute;
   left: 0px;
   height: 100%;
-  width: 100px;
+  width: 120px;
   /*width: 0px;*/
   border-right: solid 1px #dcdcdc;
 }

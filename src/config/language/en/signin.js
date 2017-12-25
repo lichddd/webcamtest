@@ -29,4 +29,6 @@ export default {
     collapse:"Collapse",
 
     force_new_user:"Force new",
+
+    add_user:"Add user",
 }

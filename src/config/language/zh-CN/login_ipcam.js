@@ -5,4 +5,5 @@ export default {
   target:"识别对象",
   no_target:"无匹配对象",
   unknown:"未知",
+  way:"路",
 }

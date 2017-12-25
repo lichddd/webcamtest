@@ -139,7 +139,7 @@ export default {
             }
 
         }
-        setTimeout(()=>{this.sendFrameLoop()}, 500);
+        setTimeout(()=>{this.sendFrameLoop()}, 100);
     },
 
     sendState() {

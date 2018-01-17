@@ -31,4 +31,6 @@ export default {
     force_new_user:"Force new",
 
     add_user:"Add user",
+
+    delete_user_info:"some learnt user has been deleted, because image is too large",
 }

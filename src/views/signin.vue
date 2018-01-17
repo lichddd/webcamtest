@@ -203,7 +203,7 @@ export default {
             }
 
         }
-        setTimeout(()=>{this.sendFrameLoop()}, 100);
+        setTimeout(()=>{this.sendFrameLoop()}, 40);
     },
     addPerson() {
       if (!this.new_person_name) {
@@ -341,6 +341,11 @@ export default {
               new: true
             });
             this.selectuser=0;
+            this.$message({
+              showClose: true,
+              message: this.language.signin.delete_user_info,
+              type: "warning"
+            });
           }
         }
         if (this.socket != null) {

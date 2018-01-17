@@ -30,4 +30,6 @@ export default {
 
     force_new_user:"強制追加",
     add_user:"新規ユーザ",
+
+    delete_user_info:"絵の多しぎですから，一部勉強したユーザーを消しつした",
 }

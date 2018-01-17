@@ -31,4 +31,6 @@ export default {
     force_new_user:"强制新增",
 
     add_user:"添加用户",
+
+    delete_user_info:"因为图片过多，清理掉一部分已学习用户",
 }

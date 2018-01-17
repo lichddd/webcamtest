@@ -52,7 +52,7 @@ let router = new Router({
   ]
 })
 router.beforeEach((to,from,next)=>{
-  if (to.name=="signin") {
+  if (to.name=="signin"||to.name=="signin_ipcam") {
     if (cookie.getCookie("token")) {
       next();
     } else {

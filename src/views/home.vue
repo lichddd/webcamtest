@@ -109,8 +109,9 @@ export default {
             this.imglist.push({name:l.name,image:ll.image});
           })
         });
-        for (var i = 1; i < 5; i++) {
-          this.imglist.push({name:this.language.home.user+(i),image:(i%5?`static/img/${i%5}.jpeg`:``)});
+        let imgs=((window.config&&window.config.imgs)||[]);
+        for (var i = 0; i < imgs.length; i++) {
+          this.imglist.push({name:this.language.home.user+(i),image:`${imgs[i]}?mk=${(new Date()).getTime()}`});
         }
         for (var i = 0; i < 210; i++) {
           this.ball.clips.push({
